@@ -1,26 +1,34 @@
 #include "thingProperties.h"
 #include "buildInRGB.h"
 #include "buzzer.h"
+#include "led.h"
 
-int buzzerPin = 2;
-int buttonPin1 = 3;
-int buttonPin2 = 4;
-int buttonPin3 = 5;
+
+const int ledPin = 1;
+const int buzzerPin = 2;
+const int buttonPin1 = 3;
+const int buttonPin2 = 4;
+const int buttonPin3 = 5;
+
 unsigned long prevMillis = 0;
 const long interval = 100;
 
 
 Buzzer buzzer(buzzerPin);
+Led led(ledPin);
 
 void setup() {
   // Initialize serial and wait for port to open:
   Serial.begin(9600);
-  
   delay(1500); 
-  pinMode(buttonPin1, INPUT);
-  pinMode(buttonPin2, INPUT);
-  pinMode(buttonPin3, INPUT);
+
+  /* Initialise all sensors and actuators */
+  pinMode(buttonPin1, INPUT);    // passcode button 1
+  pinMode(buttonPin2, INPUT);    // passcode button 2
+  pinMode(buttonPin3, INPUT);  // used to clear passcode input
   buzzer.initBuzzer();
+  led.init();
+  initBuildInRGB();
  
   
   
