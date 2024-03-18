@@ -2,6 +2,7 @@
 #include "buildInRGB.h"
 #include "buzzer.h"
 #include "led.h"
+#include "fileIO.h"
 
 
 const int ledPin = 1;
@@ -16,6 +17,7 @@ const long interval = 100;
 
 Buzzer buzzer(buzzerPin);
 Led led(ledPin);
+FileIOHandler fileIOHandler;
 
 void setup() {
   // Initialize serial and wait for port to open:
@@ -29,7 +31,13 @@ void setup() {
   buzzer.initBuzzer();
   led.init();
   initBuildInRGB();
+
  
+  fileIOHandler.init();
+  fileIOHandler.writeFile("test.txt", "Data written successfully");
+  char* testMsg = fileIOHandler.readFile("test.txt");
+  Serial.println(testMsg);
+  free(testMsg);
   
   
   // Defined in thingProperties.h
@@ -60,7 +68,11 @@ void loop() {
 
     if(digitalRead(buttonPin1) == HIGH)
     {
-      buzzer.buttonPressed();
+      led.on();
+    }
+    else
+    {
+      led.off();
     }
     
   }
