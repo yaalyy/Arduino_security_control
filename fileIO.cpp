@@ -27,7 +27,7 @@ void FileIOHandler::closeFile()
     }
 }
 
-char* FileIOHandler::readFile(char* fileName)   // this memory needs to be freed after use
+char* FileIOHandler::readFile(const char* fileName)   // this memory needs to be freed after use
 {
     this->fileName = fileName;
     std::string newString = "";
@@ -55,7 +55,7 @@ char* FileIOHandler::readFile(char* fileName)   // this memory needs to be freed
     return cString;
 }
 
-void FileIOHandler::writeFile(char* fileName, char* content)  // this will not overwrite the file, only append to it
+void FileIOHandler::writeFile(const char* fileName, const char* content)  // this will not overwrite the file, only append to it
 {
     this->fileName = fileName;
     myFile = SD.open(fileName, FILE_WRITE);
@@ -67,7 +67,7 @@ void FileIOHandler::writeFile(char* fileName, char* content)  // this will not o
     }
 }
 
-JsonDocument FileIOHandler::readJson(char* fileName)
+JsonDocument FileIOHandler::readJson(const char* fileName)
 {
     this->fileName = fileName;
     char* jsonMSG = readFile(fileName);
@@ -93,7 +93,7 @@ const char* FileIOHandler::getFileName()
     return this->fileName.c_str();
 }
 
-void FileIOHandler::deleteFile(char* fileName)
+void FileIOHandler::deleteFile(const char* fileName)
 {
     this->fileName = fileName;
     if(SD.exists(fileName))
@@ -103,7 +103,7 @@ void FileIOHandler::deleteFile(char* fileName)
     
 }
 
-void FileIOHandler::cleanFile(char* fileName)  // delete the old one and create a new one with the same name
+void FileIOHandler::cleanFile(const char* fileName)  // delete the old one and create a new one with the same name
 {
     this->fileName = fileName;
     if(SD.exists(fileName))
