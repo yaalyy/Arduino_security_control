@@ -77,7 +77,21 @@ void loop() {
     
   }
   
+}
 
+/*
+  Since UserLogin1 is READ_WRITE variable, onUserLogin1Change() is
+  executed every time a new value is received from IoT Cloud.
+*/
+void onUserLogin1Change()  {
+  // Add your code here to act upon UserLogin1 change
+}
 
+/*
+  Since UserLogin2 is READ_WRITE variable, onUserLogin2Change() is
+  executed every time a new value is received from IoT Cloud.
+*/
+void onUserLogin2Change()  {
+  // Add your code here to act upon UserLogin2 change
 }
 

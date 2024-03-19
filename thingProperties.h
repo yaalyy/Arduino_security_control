@@ -7,10 +7,20 @@ const char PASS[]     = "";    // Network password (use for WPA, or use as key f
 
 
 /* all variables uploaded to Cloud should be write here */
+void onUserLogin1Change();
+void onUserLogin2Change();
 
+String user1_log;
+String user2_log;
+String user_login_1;
+String user_login_2;
 
 void initProperties(){
 
+  ArduinoCloud.addProperty(user1_log, READ, ON_CHANGE, NULL);
+  ArduinoCloud.addProperty(user2_log, READ, ON_CHANGE, NULL);
+  ArduinoCloud.addProperty(user_login_1, READWRITE, ON_CHANGE, onUserLogin1Change);
+  ArduinoCloud.addProperty(user_login_2, READWRITE, ON_CHANGE, onUserLogin2Change);
 
 }
 
