@@ -1,10 +1,8 @@
 #include "fileIO.h"
-#include<SPI.h>
-#include<SD.h>
 #include<Arduino.h>
-#include<string>
 #include<cstring>
 #include<cstdlib>
+
 
 FileIOHandler::FileIOHandler()
 {
@@ -29,7 +27,7 @@ void FileIOHandler::closeFile()
     }
 }
 
-char* FileIOHandler::readFile(char* fileName)
+char* FileIOHandler::readFile(char* fileName)   // this memory needs to be freed after use
 {
     this->fileName = fileName;
     std::string newString = "";
@@ -57,7 +55,7 @@ char* FileIOHandler::readFile(char* fileName)
     return cString;
 }
 
-void FileIOHandler::writeFile(char* fileName, char* content)
+void FileIOHandler::writeFile(char* fileName, char* content)  // this will not overwrite the file, only append to it
 {
     this->fileName = fileName;
     myFile = SD.open(fileName, FILE_WRITE);
@@ -68,3 +66,51 @@ void FileIOHandler::writeFile(char* fileName, char* content)
 
     }
 }
+
+JsonDocument FileIOHandler::readJson(char* fileName)
+{
+    this->fileName = fileName;
+    char* jsonMSG = readFile(fileName);
+
+    // Deserialize the JSON 
+    DeserializationError error = deserializeJson(jsonObject, jsonMSG);
+    // Test if parsing succeeds
+    if (error) 
+    {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.f_str());
+        JsonDocument tempJson;
+        deserializeJson(tempJson, "{}");
+        return tempJson;
+    }
+    return jsonObject;
+    
+}
+
+const char* FileIOHandler::getFileName()
+{
+
+    return this->fileName.c_str();
+}
+
+void FileIOHandler::deleteFile(char* fileName)
+{
+    this->fileName = fileName;
+    if(SD.exists(fileName))
+    {
+        SD.remove(fileName);
+    }
+    
+}
+
+void FileIOHandler::cleanFile(char* fileName)  // delete the old one and create a new one with the same name
+{
+    this->fileName = fileName;
+    if(SD.exists(fileName))
+    {
+        SD.remove(fileName);
+        myFile = SD.open(fileName, FILE_WRITE);
+        myFile.close();
+    }
+}
+    
