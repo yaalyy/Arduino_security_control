@@ -31,9 +31,9 @@ char* FileIOHandler::readFile(const char* fileName)   // this memory needs to be
 {
     this->fileName = fileName;
     std::string newString = "";
-    myFile = SD.open(fileName);
-    if(myFile)
+    if(SD.exists(fileName))
     {
+        myFile = SD.open(fileName);
         while(myFile.available())
         {
             newString.push_back(myFile.read());

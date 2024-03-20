@@ -13,6 +13,9 @@ const int buttonPin3 = 5;
 
 unsigned long prevMillis = 0;
 const long interval = 100;
+const char* pwdFileName = "pwd.txt";
+const char* logFileName = "log.txt";
+const int pwdLength = 4;
 
 
 Buzzer buzzer(buzzerPin);
@@ -34,10 +37,19 @@ void setup() {
 
  
   fileIOHandler.init();
-  fileIOHandler.writeFile("test.txt", "Data written successfully");
-  char* testMsg = fileIOHandler.readFile("test.txt");
+  char* testMsg = fileIOHandler.readFile(pwdFileName);
+  Serial.print("The original json: ");
   Serial.println(testMsg);
   free(testMsg);
+  JsonDocument doc;
+  doc = fileIOHandler.readJson(pwdFileName);
+  Serial.print("User_1: ");
+  Serial.println(doc["Users"]["user_1"].as<const char*>());
+  Serial.print("User_2: ");
+  Serial.println(doc["Users"]["user_2"].as<const char*>());
+
+  
+  
   
   
   // Defined in thingProperties.h
@@ -64,7 +76,7 @@ void loop() {
   {
     prevMillis = currentMillis;
     /* All code should be put in this if statement*/
-
+   
 
     if(digitalRead(buttonPin1) == HIGH)
     {
