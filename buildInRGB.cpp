@@ -1,7 +1,4 @@
 #include "buildInRGB.h"
-#include <WiFiNINA.h>
-#include <utility/wifi_drv.h>
-
 
 void initBuildInRGB()
 {

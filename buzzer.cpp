@@ -1,5 +1,4 @@
 #include "buzzer.h"
-#include<Arduino.h>
 
 Buzzer::Buzzer(int buzzerPin)
 {

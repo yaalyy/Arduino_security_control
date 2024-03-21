@@ -1,7 +1,4 @@
 #include "ntp.h"
-#include<NTPClient.h>
-#include<WiFiUdp.h>
-
 
 NTPHandler::NTPHandler()
 {

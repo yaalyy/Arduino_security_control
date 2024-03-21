@@ -4,6 +4,9 @@
 #include<SPI.h>
 #include<string>
 #include<ArduinoJson.h>
+#include<Arduino.h>
+#include<cstring>
+#include<cstdlib>
 
 
 /* the file IO depends on the SD cart slot of MKR Env Shield*/
