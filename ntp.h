@@ -2,7 +2,7 @@
 #define NTP_H
 #include<ctime>
 #include<NTPClient.h>
-#include<WiFiUdp.h>
+#include<ArduinoIoTCloud.h>
 
 
 class NTPHandler
@@ -18,11 +18,14 @@ class NTPHandler
         int getMonth();
         int getDay();
         long getTimeOffset();
+        void updateNTP();  // update epoch time with NTP server
+        // void begin();
     private:
         unsigned long epochTime;
         long timeOffset;
         struct tm timeInfo;
-        void updateTimeInfo();
+        void updateTimeInfo();  // convert epoch time normal format
+        
        
 };
 

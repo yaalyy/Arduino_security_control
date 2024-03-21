@@ -1,17 +1,18 @@
 #include "passwordManager.h"
 
-PasswordManager::PasswordManager()
+PasswordManager::PasswordManager() 
 {
     this->timeOffset = 0;
 }
-PasswordManager::PasswordManager(const long timeOffset)
+PasswordManager::PasswordManager(const long timeOffset) 
 {
     this->timeOffset = timeOffset;
     
 }
 
 void PasswordManager::init(const char* pwdFileName, const char* logFileName)
-{
+{   
+    // ntpHandler.begin();
     FileIOHandler passwordHandler;
     passwordHandler.init();
     if((!passwordHandler.exists(pwdFileName))||(!passwordHandler.exists(logFileName)))
@@ -58,6 +59,7 @@ void PasswordManager::login(const char* userName)
     }
     int day, month, year, hour, minute, second;
     NTPHandler ntpHandler(this->timeOffset);
+    ntpHandler.updateNTP();
     day = ntpHandler.getDay();
     month = ntpHandler.getMonth();
     year = ntpHandler.getYear();

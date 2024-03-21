@@ -1,18 +1,8 @@
 #include "ntp.h"
 
-NTPHandler::NTPHandler()
+NTPHandler::NTPHandler() 
 {
-    WiFiUDP ntpUDP;
-    NTPClient timeClient(ntpUDP);
-    timeClient.begin();
-    if(timeClient.update())
-    {
-        this->epochTime = timeClient.getEpochTime();
-    }
-    else
-    {
-        this->epochTime = 0;
-    }
+    this->epochTime = 0;
     this->timeOffset = 0;
     
 
@@ -20,18 +10,7 @@ NTPHandler::NTPHandler()
 
 NTPHandler::NTPHandler(long timeOffset)
 {
-    WiFiUDP ntpUDP;
-    NTPClient timeClient(ntpUDP, timeOffset);
-    timeClient.begin();
-    if(timeClient.update())
-    {
-        this->epochTime = timeClient.getEpochTime();
-    }
-    else
-    {
-        this->epochTime = 0;
-    }
-    
+    this->epochTime = 0;
     this->timeOffset = timeOffset;
 }
 
@@ -85,6 +64,17 @@ int NTPHandler::getDay()
     updateTimeInfo();
     return timeInfo.tm_mday;
 }   
+
+void NTPHandler::updateNTP()
+{
+    epochTime = ArduinoCloud.getLocalTime() + timeOffset;
+    // epochTime = 0;
+}
+
+// void NTPHandler::begin()
+// {
+//     timeClient.begin();
+// }
 
 
 

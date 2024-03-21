@@ -18,6 +18,7 @@ private:
     void updatePwdFile();
     void login(const char* userName);
     long timeOffset;
+
 public:
     PasswordManager();
     PasswordManager(const long timeOffset);
