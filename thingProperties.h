@@ -19,8 +19,8 @@ void initProperties(){
 
   ArduinoCloud.addProperty(user1_log, READ, ON_CHANGE, NULL);
   ArduinoCloud.addProperty(user2_log, READ, ON_CHANGE, NULL);
-  ArduinoCloud.addProperty(user_login_1, READWRITE, ON_CHANGE, onUserLogin1Change);
-  ArduinoCloud.addProperty(user_login_2, READWRITE, ON_CHANGE, onUserLogin2Change);
+  ArduinoCloud.addProperty(user_login_1, READWRITE, 5*SECONDS, onUserLogin1Change);
+  ArduinoCloud.addProperty(user_login_2, READWRITE, 5*SECONDS, onUserLogin2Change);
 
 }
 
