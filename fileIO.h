@@ -14,11 +14,12 @@ class FileIOHandler
         void init();
         void closeFile();
         char* readFile(const char* fileName);
-        void writeFile(const char* fileName, const char* content);  
+        void writeFile(const char* fileName, const char* content);    // this will not overwrite the file, only append to it
         JsonDocument readJson(const char* fileName);  // this can read json object from a JSON file
         const char* getFileName();
         void deleteFile(const char* fileName);
         void cleanFile(const char* fileName);  // this is usually called before writing data into a file
+        bool exists(const char* fileName);
         
     private:
         std::string fileName="";

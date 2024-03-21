@@ -10,13 +10,13 @@ FileIOHandler::FileIOHandler()
 }
 void FileIOHandler::init()
 {
-    Serial.println("Initializing SD card...");
+    // Serial.println("Initializing SD card...");
     if(!SD.begin())
     {
-        Serial.println("SD card initialisation failed!");
+        // Serial.println("SD card initialisation failed!");
         while(1);
     }
-    Serial.println("Initialisation done.");
+    // Serial.println("Initialisation done.");
 }
 
 void FileIOHandler::closeFile()
@@ -29,16 +29,20 @@ void FileIOHandler::closeFile()
 
 char* FileIOHandler::readFile(const char* fileName)   // this memory needs to be freed after use
 {
-    this->fileName = fileName;
     std::string newString = "";
-    if(SD.exists(fileName))
+    if((fileName != nullptr)&&(fileName[0] != '\0'))
     {
-        myFile = SD.open(fileName);
-        while(myFile.available())
+        this->fileName = fileName;
+        
+        if(SD.exists(this->fileName.c_str()))
         {
-            newString.push_back(myFile.read());
+            myFile = SD.open(this->fileName.c_str());
+            while(myFile.available())
+            {
+                newString.push_back(myFile.read());
+            }
+            myFile.close();
         }
-        myFile.close();
     }
 
     // Allocate memory for the C-string
@@ -57,32 +61,47 @@ char* FileIOHandler::readFile(const char* fileName)   // this memory needs to be
 
 void FileIOHandler::writeFile(const char* fileName, const char* content)  // this will not overwrite the file, only append to it
 {
-    this->fileName = fileName;
-    myFile = SD.open(fileName, FILE_WRITE);
-    if(myFile)
+    if((fileName != nullptr)&&(fileName[0] != '\0'))
     {
-        myFile.println(content);
-        myFile.close();
+        this->fileName = fileName;
+        myFile = SD.open(fileName, FILE_WRITE);
+        if(myFile)
+        {
+            myFile.println(content);
+            myFile.close();
 
+        }
     }
+    
+   
+
 }
 
 JsonDocument FileIOHandler::readJson(const char* fileName)
 {
-    this->fileName = fileName;
-    char* jsonMSG = readFile(fileName);
-
-    // Deserialize the JSON 
-    DeserializationError error = deserializeJson(jsonObject, jsonMSG);
-    // Test if parsing succeeds
-    if (error) 
+    if((fileName != nullptr)&&(fileName[0] != '\0'))
     {
-        Serial.print(F("deserializeJson() failed: "));
-        Serial.println(error.f_str());
+        this->fileName = fileName;
+        char* jsonMSG = readFile(fileName);
+        // Deserialize the JSON 
+        DeserializationError error = deserializeJson(jsonObject, jsonMSG);
+        // Test if parsing succeeds
+        if (error) 
+        {
+            Serial.print(F("deserializeJson() failed: "));
+            Serial.println(error.f_str());
+            JsonDocument tempJson;
+            deserializeJson(tempJson, "{}");
+            return tempJson;
+        }
+    }
+    else
+    {
         JsonDocument tempJson;
         deserializeJson(tempJson, "{}");
         return tempJson;
     }
+    
     return jsonObject;
     
 }
@@ -95,22 +114,42 @@ const char* FileIOHandler::getFileName()
 
 void FileIOHandler::deleteFile(const char* fileName)
 {
-    this->fileName = fileName;
-    if(SD.exists(fileName))
+    if((fileName != nullptr)&&(fileName[0] != '\0'))
     {
-        SD.remove(fileName);
+        this->fileName = fileName;
+        if(SD.exists(fileName))
+        {
+            SD.remove(fileName);
+        }
     }
+    
+    
     
 }
 
 void FileIOHandler::cleanFile(const char* fileName)  // delete the old one and create a new one with the same name
 {
-    this->fileName = fileName;
-    if(SD.exists(fileName))
+    if((fileName != nullptr)&&(fileName[0] != '\0'))
     {
-        SD.remove(fileName);
-        myFile = SD.open(fileName, FILE_WRITE);
-        myFile.close();
+        this->fileName = fileName;
+        if(SD.exists(fileName))
+        {
+            SD.remove(fileName);
+            myFile = SD.open(fileName, FILE_WRITE);
+            myFile.close();
+        }
     }
+    
+}
+
+bool FileIOHandler::exists(const char* fileName)
+{
+    if((fileName != nullptr)&&(fileName[0] != '\0'))
+    {
+        
+        return SD.exists(fileName);
+    }
+    return false;
+    
 }
     
