@@ -29,7 +29,6 @@ PasswordManager pwdManager(timeOffset);
 
 bool inputtingPwd = false;
 std::string pwdInput = "";
-JsonDocument pwdDocument;
 JsonDocument logDocument;
 
 void setup() {
@@ -102,6 +101,7 @@ void loop() {
 
     if(digitalRead(buttonPin3) == HIGH)
     {
+      buzzer.buttonPressed();
       inputtingPwd = !inputtingPwd;
     }
   }
@@ -148,6 +148,7 @@ void inputPassword()
     }
     if((digitalRead(buttonPin3) == HIGH)&&(pwdInput.length() > 0))
     {
+      buzzer.buttonPressed();
       inputtingPwd = !inputtingPwd;
     }
   }
@@ -176,6 +177,11 @@ void inputPassword()
     buzzer.buzzerBeeping(1000, 1000);
     pwdInput = "";
     inputtingPwd = false;
+  }
+  if(attempts >= attemptLimit)
+  {
+    attempts = 0;
+    buzzer.alarm();
   }
 
 }
