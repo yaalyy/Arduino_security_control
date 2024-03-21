@@ -21,6 +21,7 @@ public:
     bool verifyPassword(const char* pwd);
     bool changePassword(const char* userName, const char* newPwd);
     std::string getLatestLoginMsg();
+    std::string getPassword(const char* userName);
 };
 
 

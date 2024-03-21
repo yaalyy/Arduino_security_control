@@ -115,3 +115,12 @@ std::string PasswordManager::getLatestLoginMsg()
 {
     return latestLoginMsg;
 }
+
+std::string PasswordManager::getPassword(const char* userName)
+{
+    if(userPwdMap.find(userName) != userPwdMap.end())
+    {
+        return userPwdMap[userName];
+    }
+    return "";
+}
