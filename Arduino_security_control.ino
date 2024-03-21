@@ -79,15 +79,7 @@ void loop() {
     // set RGB to yellow
     setBuildInRGB(255,255,0);
   }
-  if(inputtingPwd)
-  {
-    digitalWrite(ledPin, HIGH);
-    inputPassword();
-  }
-  else
-  {
-    digitalWrite(ledPin, LOW);
-  }
+
   unsigned long currentMillis = millis();
   if(currentMillis - prevMillis >= interval)  // setting up the refresh interval
   {
@@ -99,11 +91,23 @@ void loop() {
     user_login_1 = pwdManager.getPassword("user_1").c_str();
     user_login_2 = pwdManager.getPassword("user_2").c_str();
 
+    if(inputtingPwd)
+    {
+      led.on();
+      inputPassword();
+    }
+    else
+    {
+      led.off();
+    }
+
     if(digitalRead(buttonPin3) == HIGH)
     {
       buzzer.buttonPressed();
       inputtingPwd = !inputtingPwd;
     }
+
+   
   }
   
 }
@@ -130,26 +134,23 @@ void inputPassword()
   {
     if(digitalRead(buttonPin1) == HIGH)
     {
-      if(pwdInput.length() < pwdLength)
-      {
-        pwdInput += "0";
-        buzzer.buttonPressed();
-        delay(500);
-      }
+      pwdInput += "0";
+      buzzer.buttonPressed();
+      delay(500);
+      
     }
     if(digitalRead(buttonPin2) == HIGH)
-    {
-      if(pwdInput.length() < pwdLength)
-      {
-        pwdInput += "1";
-        buzzer.buttonPressed();
-        delay(500);
-      }
+    {  
+      pwdInput += "1";
+      buzzer.buttonPressed();
+      delay(500);
+      
     }
     if((digitalRead(buttonPin3) == HIGH)&&(pwdInput.length() > 0))
     {
-      buzzer.buttonPressed();
+      //buzzer.buttonPressed();
       inputtingPwd = !inputtingPwd;
+      
     }
   }
 
