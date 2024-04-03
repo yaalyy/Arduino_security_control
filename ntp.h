@@ -19,7 +19,7 @@ class NTPHandler
         int getDay();
         long getTimeOffset();
         void updateNTP();  // update epoch time with NTP server
-        // void begin();
+        
     private:
         unsigned long epochTime;
         long timeOffset;

@@ -68,13 +68,8 @@ int NTPHandler::getDay()
 void NTPHandler::updateNTP()
 {
     epochTime = ArduinoCloud.getLocalTime() + timeOffset;
-    // epochTime = 0;
 }
 
-// void NTPHandler::begin()
-// {
-//     timeClient.begin();
-// }
 
 
 

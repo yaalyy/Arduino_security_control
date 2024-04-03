@@ -12,7 +12,6 @@ PasswordManager::PasswordManager(const long timeOffset)
 
 void PasswordManager::init(const char* pwdFileName, const char* logFileName)
 {   
-    // ntpHandler.begin();
     FileIOHandler passwordHandler;
     passwordHandler.init();
     if((!passwordHandler.exists(pwdFileName))||(!passwordHandler.exists(logFileName)))
