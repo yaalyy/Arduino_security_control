@@ -14,8 +14,8 @@ const int buttonPin3 = 5;
 
 unsigned long prevMillis = 0;
 const long interval = 100;
-const char* pwdFileName = "pwd.txt";
-const char* logFileName = "log.txt";
+const char* pwdFileName = "pwd.txt";    // password file name
+const char* logFileName = "log.txt";   // log file name
 const int pwdLength = 4;
 const int attemptLimit = 3;  // the maximum number of attempts to enter the passcode
 int attempts = 0;
